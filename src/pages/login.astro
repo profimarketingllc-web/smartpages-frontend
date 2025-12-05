@@ -37,16 +37,17 @@ async function handleSubmit(e) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartPages Login</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
     <style>
       :root {
         --navy: #1E2A45;
         --yellow: #F5B400;
         --orange: #E47E00;
-        --purple: #4B3CFB;
-        --purple-light: #6E5FFB;
-        --teal: #4EC5C1;
-        --teal-dark: #2CA0C4;
-        --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        --blue: #4E6BFF;
+        --blue-light: #657AFF;
+        --violet: #8B5CFF;
+        --violet-light: #A076FF;
+        --shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
       }
 
       body {
@@ -170,16 +171,16 @@ async function handleSubmit(e) {
         color: white;
         padding: 2rem;
         box-shadow: var(--shadow);
-        transition: all 0.3s ease;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
       .card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
       }
 
       .smartprofile {
-        background: linear-gradient(135deg, var(--purple), var(--purple-light));
+        background: linear-gradient(135deg, var(--blue), var(--blue-light));
       }
 
       .smartpage {
@@ -187,7 +188,7 @@ async function handleSubmit(e) {
       }
 
       .smartdomain {
-        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+        background: linear-gradient(135deg, var(--violet), var(--violet-light));
       }
 
       footer {
@@ -244,7 +245,7 @@ async function handleSubmit(e) {
         <input type="email" name="email" required />
 
         <div class="checkbox">
-          <input type="checkbox" id="is_business" name="is_business" onchange="toggleCompany()" />
+          <input type="checkbox" id="is_business" name="is_business" />
           <label for="is_business">Das ist ein Firmenkonto (Business)</label>
         </div>
 
@@ -279,11 +280,13 @@ async function handleSubmit(e) {
     </footer>
 
     <script>
-      function toggleCompany() {
+      document.addEventListener("DOMContentLoaded", () => {
         const cb = document.getElementById("is_business");
         const field = document.getElementById("company_field");
-        field.style.display = cb.checked ? "block" : "none";
-      }
+        cb.addEventListener("change", () => {
+          field.style.display = cb.checked ? "block" : "none";
+        });
+      });
     </script>
   </body>
 </html>
