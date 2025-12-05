@@ -1,57 +1,65 @@
 ---
-import "../styles/global.css"; // optional, falls du globale Fonts oder Variablen nutzt
----
+--- 
 
 <!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SmartPages – Login</title>
+  <title>SmartPages – Login & Produkte</title>
+
+  <!-- Favicon + Fonts -->
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <style>
     :root {
       --navy: #1E2A45;
       --orange1: #F48C06;
       --orange2: #F77F00;
-      --blue: #4234EB;
-      --mint: #4ADEDE;
-      --red: #C53A3A;
+      --violet: #4234EB;  /* SmartProfil */
+      --red: #C53A3A;     /* SmartPages (vormals SmartLinks) */
+      --mint: #4ADEDE;    /* SmartDomains */
       --text-dark: #333;
-      --radius: 14px;
+      --radius: 16px;
+      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Montserrat', sans-serif;
       margin: 0;
-      background-color: #fff;
       color: var(--text-dark);
+      background: #fff;
     }
 
     header {
       background-color: var(--navy);
-      padding: 1rem 2rem;
       display: flex;
       align-items: center;
+      padding: 1rem 2rem;
       gap: 1rem;
     }
 
     header img {
-      height: 40px;
+      height: 42px;
     }
 
     header h1 {
       color: white;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       font-weight: 700;
+      letter-spacing: 0.5px;
     }
 
     main {
+      padding: 3rem 1rem;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 3rem 1rem;
     }
 
     .login-container {
@@ -61,21 +69,26 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
       max-width: 1100px;
       background: #fff;
       border-radius: var(--radius);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-      padding: 2rem;
+      box-shadow: var(--shadow);
+      padding: 2.5rem;
+      margin-bottom: 3rem;
     }
 
-    .welcome {
+    .hero {
       flex: 1 1 45%;
       background: var(--navy);
       color: white;
       border-radius: var(--radius);
-      padding: 2rem;
+      padding: 2.5rem;
     }
 
-    .welcome h2 {
-      font-size: 1.8rem;
+    .hero h2 {
+      font-size: 2rem;
       margin-bottom: 1rem;
+    }
+
+    .hero p {
+      line-height: 1.6;
     }
 
     .form-section {
@@ -91,10 +104,16 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
     input[type="text"],
     input[type="email"] {
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.9rem;
       border-radius: var(--radius);
       border: 1px solid #ccc;
       font-size: 1rem;
+      transition: border-color 0.2s ease;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--orange1);
     }
 
     .checkbox {
@@ -102,6 +121,12 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    #company_field {
+      display: none;
+      transition: opacity 0.2s ease;
     }
 
     button {
@@ -114,12 +139,12 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
       border-radius: var(--radius);
       font-size: 1rem;
       cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
     }
 
     .info {
@@ -132,25 +157,32 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 3rem;
       gap: 1.5rem;
+      max-width: 1100px;
     }
 
     .product-card {
-      flex: 1 1 280px;
+      flex: 1 1 300px;
       border-radius: var(--radius);
       color: white;
-      padding: 1.5rem;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+      text-align: left;
+      transition: transform 0.2s ease;
     }
 
-    .product-profiles { background: linear-gradient(135deg, var(--blue), #9B7BFF); }
-    .product-links { background: linear-gradient(135deg, var(--red), #FFB5B5); }
-    .product-domains { background: linear-gradient(135deg, var(--mint), #A0F0E0); }
+    .product-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .product-profil { background: var(--violet); }
+    .product-pages { background: var(--red); }
+    .product-domains { background: var(--mint); color: #003333; }
 
     .product-card h3 {
       margin-top: 0;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      font-weight: 700;
     }
 
     footer {
@@ -164,7 +196,7 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
       .login-container {
         flex-direction: column;
       }
-      .welcome, .form-section {
+      .hero, .form-section {
         flex: 1 1 100%;
       }
     }
@@ -173,69 +205,83 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
 
 <body>
   <header>
-    <img src="/SmartPages_icon_transparent.png" alt="SmartPages Logo" />
+    <img src="/SmartPages_icon_transparent.png" alt="SmartPages Logo">
     <h1>SmartPages</h1>
   </header>
 
   <main>
     <div class="login-container">
-      <div class="welcome">
+      <div class="hero">
         <h2>Willkommen bei SmartPages</h2>
-        <p>Fordere deinen persönlichen <strong>Magic-Link</strong> an und starte direkt mit deinem Dashboard. Wir benötigen nur ein paar Basisdaten, damit dein Zugang korrekt zugeordnet werden kann.</p>
+        <p>Fordere Deinen persönlichen <strong>Magic-Link</strong> an und starte direkt mit Deinem Dashboard.</p>
+        <p>Wir benötigen nur ein paar Basisdaten von Dir, damit Dein Zugang korrekt zugeordnet werden kann.</p>
         <p>Du kannst wählen, ob du SmartPages privat oder als Unternehmen nutzt. Der Zugang bleibt in beiden Fällen kostenlos in der Testphase.</p>
       </div>
 
       <div class="form-section">
         <form id="loginForm">
           <label for="first_name">Vorname*</label>
-          <input type="text" id="first_name" name="first_name" required />
+          <input type="text" id="first_name" name="first_name" required>
 
           <label for="last_name">Nachname</label>
-          <input type="text" id="last_name" name="last_name" />
+          <input type="text" id="last_name" name="last_name">
 
           <label for="email">E-Mail-Adresse*</label>
-          <input type="email" id="email" name="email" required />
+          <input type="email" id="email" name="email" required>
 
           <div class="checkbox">
-            <input type="checkbox" id="is_business" name="is_business" />
+            <input type="checkbox" id="is_business" name="is_business">
             <label for="is_business">Das ist ein Firmenkonto (Business)</label>
           </div>
 
+          <div id="company_field">
+            <label for="company_name">Firmenname*</label>
+            <input type="text" id="company_name" name="company_name">
+          </div>
+
           <button type="submit">Magic-Link senden</button>
-          <div class="info">Bitte Vorname und E-Mail ausfüllen, damit wir dir den Link schicken können.</div>
+          <div class="info">Bitte fülle alle Pflichtfelder aus, um Deinen Zugang zu erhalten.</div>
         </form>
       </div>
     </div>
 
     <section class="products">
-      <div class="product-card product-profiles">
+      <div class="product-card product-profil">
         <h3>SmartProfil</h3>
-        <p>Erstelle deine professionelle Bio-Seite mit Branding, Links & Kontakt – perfekt für Creator, Influencer & Solo-Unternehmer.</p>
+        <p>Erstelle in Minuten deine zentrale Profilseite mit Branding, Links & Kontakt – perfekt für Creator, Influencer und Solopreneure.</p>
       </div>
 
-      <div class="product-card product-links">
-        <h3>SmartLinks</h3>
-        <p>Verwalte deine Kurzlinks zentral, tracke Klicks und optimiere Kampagnen mit wenigen Handgriffen.</p>
+      <div class="product-card product-pages">
+        <h3>SmartPages</h3>
+        <p>Erstelle smarte Kurzlinks, tracke Klicks und optimiere deine Kampagnen mühelos – alles in deinem zentralen Dashboard.</p>
       </div>
 
       <div class="product-card product-domains">
         <h3>SmartDomains</h3>
-        <p>Verwalte deine eigene Marken-Domain, sichere Redirects und SSL – mit nur einem Klick.</p>
+        <p>Verwalte Deine eigene Marken-Domains, sichere Redirects & SSL-Zertifikate – alles mit nur einem Klick.</p>
       </div>
     </section>
   </main>
 
   <footer>
-    &copy; 2025 SmartPages by Profi Marketing LLC – Alle Rechte vorbehalten
+    &copy; 2025 SmartPages · Profi Marketing LLC · DSGVO-konform in Europa gehostet
   </footer>
 
   <script>
+    const checkbox = document.getElementById('is_business');
+    const companyField = document.getElementById('company_field');
+
+    checkbox.addEventListener('change', () => {
+      companyField.style.display = checkbox.checked ? 'block' : 'none';
+    });
+
     document.getElementById("loginForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       const data = {
         first_name: e.target.first_name.value.trim(),
         last_name: e.target.last_name.value.trim(),
         email: e.target.email.value.trim(),
+        company_name: e.target.company_name?.value.trim() || "",
         is_business: e.target.is_business.checked
       };
 
@@ -247,7 +293,7 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
 
       const result = await res.json();
       if (result.ok) {
-        alert("✅ Magic-Link wurde gesendet! Bitte überprüfe dein Postfach.");
+        alert("✅ Dein Magic-Link wurde gesendet! Bitte prüfe dein Postfach.");
       } else {
         alert("❌ Fehler: " + (result.message || "Etwas ist schiefgelaufen."));
       }
