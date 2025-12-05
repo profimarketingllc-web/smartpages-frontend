@@ -1,6 +1,5 @@
 ---
---- 
-
+---
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -17,42 +16,46 @@
       --navy: #1E2A45;
       --orange1: #F48C06;
       --orange2: #F77F00;
-      --violet: #4234EB;  /* SmartProfil */
-      --red: #C53A3A;     /* SmartPages (vormals SmartLinks) */
-      --mint: #4ADEDE;    /* SmartDomains */
-      --text-dark: #333;
-      --radius: 16px;
-      --shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
-    }
-
-    * {
-      box-sizing: border-box;
+      --violet: #4234EB;
+      --red: #C53A3A;
+      --mint: #4ADEDE;
+      --text-dark: #222;
+      --radius: 18px;
+      --shadow-float: 8px 8px 18px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 12px 12px 28px rgba(0, 0, 0, 0.15);
     }
 
     body {
       font-family: 'Montserrat', sans-serif;
       margin: 0;
-      color: var(--text-dark);
       background: #fff;
+      color: var(--text-dark);
     }
 
+    /* HEADER */
     header {
-      background-color: var(--navy);
-      display: flex;
-      align-items: center;
-      padding: 1rem 2rem;
-      gap: 1rem;
+      background: var(--navy);
+      text-align: center;
+      padding: 2.5rem 1rem;
+      color: white;
     }
 
     header img {
-      height: 42px;
+      height: 64px;
+      margin-bottom: 1rem;
     }
 
     header h1 {
-      color: white;
-      font-size: 1.5rem;
+      font-size: 2rem;
+      margin: 0;
       font-weight: 700;
-      letter-spacing: 0.5px;
+    }
+
+    header p.claim {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-top: 0.5rem;
+      letter-spacing: 0.2px;
     }
 
     main {
@@ -69,7 +72,7 @@
       max-width: 1100px;
       background: #fff;
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.05);
       padding: 2.5rem;
       margin-bottom: 3rem;
     }
@@ -89,6 +92,7 @@
 
     .hero p {
       line-height: 1.6;
+      margin: 0.5rem 0;
     }
 
     .form-section {
@@ -126,7 +130,6 @@
 
     #company_field {
       display: none;
-      transition: opacity 0.2s ease;
     }
 
     button {
@@ -144,35 +147,31 @@
 
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-    }
-
-    .info {
-      font-size: 0.9rem;
-      margin-top: 0.8rem;
-      color: #555;
+      box-shadow: var(--shadow-hover);
     }
 
     .products {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 1.5rem;
+      gap: 2rem;
       max-width: 1100px;
     }
 
     .product-card {
       flex: 1 1 300px;
       border-radius: var(--radius);
+      padding: 2rem;
       color: white;
-      padding: 1.8rem;
-      box-shadow: var(--shadow);
+      box-shadow: 8px 8px 16px rgba(0,0,0,0.12);
       text-align: left;
-      transition: transform 0.2s ease;
+      transition: all 0.25s ease;
+      transform: translateY(0);
     }
 
     .product-card:hover {
-      transform: translateY(-6px);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
     }
 
     .product-profil { background: var(--violet); }
@@ -181,7 +180,7 @@
 
     .product-card h3 {
       margin-top: 0;
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       font-weight: 700;
     }
 
@@ -196,25 +195,23 @@
       .login-container {
         flex-direction: column;
       }
-      .hero, .form-section {
-        flex: 1 1 100%;
-      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <img src="/SmartPages_icon_transparent.png" alt="SmartPages Logo">
+    <img src="/SmartPages_icon_transparent.png" alt="SmartPages Logo" />
     <h1>SmartPages</h1>
+    <p class="claim">Wir bringen dich in 10&nbsp;Minuten online – ohne Technik&nbsp;Wissen</p>
   </header>
 
   <main>
     <div class="login-container">
       <div class="hero">
         <h2>Willkommen bei SmartPages</h2>
-        <p>Fordere Deinen persönlichen <strong>Magic-Link</strong> an und starte direkt mit Deinem Dashboard.</p>
-        <p>Wir benötigen nur ein paar Basisdaten von Dir, damit Dein Zugang korrekt zugeordnet werden kann.</p>
+        <p>Fordere deinen persönlichen <strong>Magic-Link</strong> an und starte direkt mit deinem Dashboard.</p>
+        <p>Wir benötigen nur ein paar Basisdaten, damit dein Zugang korrekt zugeordnet werden kann.</p>
         <p>Du kannst wählen, ob du SmartPages privat oder als Unternehmen nutzt. Der Zugang bleibt in beiden Fällen kostenlos in der Testphase.</p>
       </div>
 
@@ -240,7 +237,6 @@
           </div>
 
           <button type="submit">Magic-Link senden</button>
-          <div class="info">Bitte fülle alle Pflichtfelder aus, um Deinen Zugang zu erhalten.</div>
         </form>
       </div>
     </div>
@@ -258,7 +254,7 @@
 
       <div class="product-card product-domains">
         <h3>SmartDomains</h3>
-        <p>Verwalte Deine eigene Marken-Domains, sichere Redirects & SSL-Zertifikate – alles mit nur einem Klick.</p>
+        <p>Verwalte eigene Marken-Domains, sichere Redirects & SSL-Zertifikate – alles mit nur einem Klick.</p>
       </div>
     </section>
   </main>
@@ -270,7 +266,6 @@
   <script>
     const checkbox = document.getElementById('is_business');
     const companyField = document.getElementById('company_field');
-
     checkbox.addEventListener('change', () => {
       companyField.style.display = checkbox.checked ? 'block' : 'none';
     });
