@@ -181,8 +181,8 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
     <div class="login-container">
       <div class="welcome">
         <h2>Willkommen bei SmartPages</h2>
-        <p>Fordere Deinen persönlichen <strong>Magic-Link</strong> an und starte direkt mit Deinem Dashboard. Wir benötigen nur ein paar Basisdaten vin Dir, damit Dein Zugang korrekt zugeordnet werden kann.</p>
-        <p>Du kannst wählen, ob Du SmartPages privat oder als Unternehmen nutzt. Der Zugang bleibt in beiden Fällen kostenlos in der Testphase.</p>
+        <p>Fordere deinen persönlichen <strong>Magic-Link</strong> an und starte direkt mit deinem Dashboard. Wir benötigen nur ein paar Basisdaten, damit dein Zugang korrekt zugeordnet werden kann.</p>
+        <p>Du kannst wählen, ob du SmartPages privat oder als Unternehmen nutzt. Der Zugang bleibt in beiden Fällen kostenlos in der Testphase.</p>
       </div>
 
       <div class="form-section">
@@ -217,3 +217,41 @@ import "../styles/global.css"; // optional, falls du globale Fonts oder Variable
         <h3>SmartLinks</h3>
         <p>Verwalte deine Kurzlinks zentral, tracke Klicks und optimiere Kampagnen mit wenigen Handgriffen.</p>
       </div>
+
+      <div class="product-card product-domains">
+        <h3>SmartDomains</h3>
+        <p>Verwalte deine eigene Marken-Domain, sichere Redirects und SSL – mit nur einem Klick.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 SmartPages by Profi Marketing LLC – Alle Rechte vorbehalten
+  </footer>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        first_name: e.target.first_name.value.trim(),
+        last_name: e.target.last_name.value.trim(),
+        email: e.target.email.value.trim(),
+        is_business: e.target.is_business.checked
+      };
+
+      const res = await fetch("https://smartpages.profi-marketing.com/api/auth/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      if (result.ok) {
+        alert("✅ Magic-Link wurde gesendet! Bitte überprüfe dein Postfach.");
+      } else {
+        alert("❌ Fehler: " + (result.message || "Etwas ist schiefgelaufen."));
+      }
+    });
+  </script>
+</body>
+</html>
