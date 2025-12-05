@@ -52,9 +52,19 @@ async function handleSubmit(e) {
 
       body {
         margin: 0;
-        font-family: 'Inter', sans-serif;
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
         background: #ffffff;
         color: #222;
+      }
+
+      input,
+      button,
+      label,
+      p,
+      h1,
+      h2,
+      h3 {
+        font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       }
 
       header {
@@ -74,8 +84,9 @@ async function handleSubmit(e) {
       }
 
       .header-text h1 {
-        font-size: 2rem;
-        margin: 0;
+        font-size: 2.4rem;
+        font-weight: 800;
+        margin: 0 0 0.4rem;
       }
 
       .header-text p {
@@ -112,13 +123,16 @@ async function handleSubmit(e) {
 
       .welcome h2 {
         color: var(--yellow);
-        margin: 0;
-        font-size: 2rem;
+        margin: 0 0 0.6rem;
+        font-size: 2.2rem;
+        font-weight: 800;
       }
 
       .welcome h3 {
-        margin: 0.3rem 0 1.2rem;
+        margin: 0 0 1.25rem;
         color: var(--navy);
+        font-size: 1.35rem;
+        font-weight: 700;
       }
 
       form {
@@ -138,6 +152,8 @@ async function handleSubmit(e) {
 
       label {
         font-weight: 500;
+        font-size: 0.9rem;
+        color: #6b7280;
       }
 
       input[type="text"],
@@ -196,6 +212,12 @@ async function handleSubmit(e) {
         padding: 2rem;
         box-shadow: var(--shadow);
         transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem;
       }
 
       .card:hover {
