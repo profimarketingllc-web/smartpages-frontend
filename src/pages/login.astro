@@ -1,10 +1,39 @@
 ---
-import { useState } from 'astro/jsx-runtime';
+const API_URL = "https://smartcore.profi-marketing-llc.workers.dev/api/auth/start";
+
+async function handleSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    first_name: form.first_name.value.trim(),
+    last_name: form.last_name.value.trim(),
+    email: form.email.value.trim(),
+    company_name: form.company_name?.value.trim() || "",
+    is_business: form.is_business.checked,
+  };
+
+  try {
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+    const result = await res.json();
+    if (result.ok) {
+      alert("✅ Magic-Link wurde gesendet! Bitte prüfe dein E-Mail-Postfach.");
+      form.reset();
+    } else {
+      alert("❌ Fehler: " + (result.message || result.error));
+    }
+  } catch (err) {
+    alert("⚠️ Netzwerkfehler: " + err.message);
+  }
+}
 ---
 
 <html lang="de">
   <head>
-    <meta charset="UTF-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartPages Login</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -13,112 +42,95 @@ import { useState } from 'astro/jsx-runtime';
         --navy: #1E2A45;
         --yellow: #F5B400;
         --orange: #E47E00;
-        --lila1: #4B3CFB;
-        --lila2: #6E5FFB;
-        --aqua1: #4EC5C1;
-        --aqua2: #2CA0C4;
-        --white: #ffffff;
-        --gray: #f5f5f5;
+        --purple: #4B3CFB;
+        --purple-light: #6E5FFB;
+        --teal: #4EC5C1;
+        --teal-dark: #2CA0C4;
+        --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
       }
 
       body {
         margin: 0;
-        font-family: 'Segoe UI', sans-serif;
-        background-color: var(--gray);
-        color: var(--navy);
+        font-family: 'Inter', sans-serif;
+        background: #ffffff;
+        color: #222;
       }
 
       header {
         background: var(--navy);
         color: white;
-        padding: 1.8rem 3rem;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 1rem;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.25);
+        gap: 2rem;
+        padding: 1.5rem;
+        text-align: center;
       }
 
       header img {
-        height: 120px;
         width: 120px;
+        height: 120px;
       }
 
-      header .text-block {
-        display: flex;
-        flex-direction: column;
-      }
-
-      header .text-block h1 {
-        margin: 0;
+      .header-text h1 {
         font-size: 2rem;
-        font-weight: 700;
+        margin: 0;
       }
 
-      header .text-block p {
+      .header-text p {
         margin: 0;
         font-size: 1rem;
-        color: #ddd;
-      }
-
-      main {
-        max-width: 1100px;
-        margin: 3rem auto;
-        padding: 0 2rem;
+        opacity: 0.9;
       }
 
       .hero {
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        max-width: 1200px;
+        margin: 4rem auto;
         gap: 2rem;
-        justify-content: center;
-        align-items: stretch;
-        margin-bottom: 3rem;
+        align-items: start;
+        padding: 0 2rem;
       }
 
-      .hero .welcome,
-      .hero .login-box {
-        flex: 1;
-        min-width: 300px;
-        background: white;
-        border-radius: 1rem;
+      .welcome {
+        background: #fff;
+        box-shadow: var(--shadow);
         padding: 2rem;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        border-radius: 1rem;
       }
 
-      .hero .welcome h2 {
-        font-size: 1.8rem;
+      .welcome h2 {
         color: var(--yellow);
-        margin-bottom: 0.3rem;
+        margin: 0;
+        font-size: 2rem;
       }
 
-      .hero .welcome h3 {
-        font-size: 1.8rem;
+      .welcome h3 {
+        margin: 0.3rem 0 1.2rem;
         color: var(--navy);
-        margin-top: 0;
-      }
-
-      .hero .welcome p {
-        line-height: 1.5;
       }
 
       form {
+        background: #fff;
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        border-radius: 1rem;
         display: flex;
         flex-direction: column;
         gap: 1rem;
+      }
+
+      label {
+        font-weight: 500;
       }
 
       input[type="text"],
       input[type="email"] {
         padding: 0.8rem;
-        border-radius: 8px;
         border: 1px solid #ccc;
+        border-radius: 0.5rem;
         font-size: 1rem;
-        width: 100%;
-      }
-
-      label {
-        font-weight: 600;
       }
 
       .checkbox {
@@ -129,57 +141,70 @@ import { useState } from 'astro/jsx-runtime';
 
       button {
         background: linear-gradient(135deg, var(--yellow), var(--orange));
-        border: none;
         color: white;
-        font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: bold;
         padding: 0.9rem;
-        border-radius: 10px;
+        border: none;
+        border-radius: 0.6rem;
         cursor: pointer;
-        transition: all 0.3s ease;
+        font-size: 1rem;
+        transition: transform 0.2s, box-shadow 0.2s;
       }
 
       button:hover {
-        transform: scale(1.03);
-        box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        transform: scale(1.02);
+        box-shadow: var(--shadow);
       }
 
       .products {
+        max-width: 1200px;
+        margin: 4rem auto;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1.5rem;
+        gap: 2rem;
+        padding: 0 2rem;
       }
 
-      .product {
-        color: white;
+      .card {
         border-radius: 1rem;
-        padding: 1.5rem;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        color: white;
+        padding: 2rem;
+        box-shadow: var(--shadow);
         transition: all 0.3s ease;
       }
 
-      .product:hover {
+      .card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
       }
 
-      .p-profile {
-        background: linear-gradient(135deg, var(--lila1), var(--lila2));
+      .smartprofile {
+        background: linear-gradient(135deg, var(--purple), var(--purple-light));
       }
 
-      .p-page {
+      .smartpage {
         background: linear-gradient(135deg, var(--yellow), var(--orange));
       }
 
-      .p-domain {
-        background: linear-gradient(135deg, var(--aqua1), var(--aqua2));
+      .smartdomain {
+        background: linear-gradient(135deg, var(--teal), var(--teal-dark));
       }
 
       footer {
         text-align: center;
-        margin: 4rem 0 2rem;
-        color: #777;
+        padding: 2rem;
+        background: #f5f5f5;
         font-size: 0.9rem;
+        color: #555;
+      }
+
+      @media (max-width: 900px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        header {
+          flex-direction: column;
+        }
       }
     </style>
   </head>
@@ -187,111 +212,78 @@ import { useState } from 'astro/jsx-runtime';
   <body>
     <header>
       <img src="/SmartPages_icon_transparent.png" alt="SmartPages Logo" />
-      <div class="text-block">
+      <div class="header-text">
         <h1>SmartPages</h1>
         <p>Wir bringen dich in 10 Minuten online – ohne Technik Wissen</p>
       </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="welcome">
-          <h2>Herzlich Willkommen</h2>
-          <h3>bei SmartPages</h3>
-          <p>
-            Mit SmartPages startest du in nur wenigen Minuten dein eigenes digitales Zuhause.
-            Wir senden dir deinen persönlichen <strong>Magic-Link</strong>, mit dem du direkt in dein Dashboard gelangst – ohne Passwort oder komplizierte Registrierung.
-            Gib einfach deine Basisdaten ein, damit dein Account korrekt zugeordnet werden kann.
-            Du entscheidest, ob du SmartPages privat oder geschäftlich nutzt – der Zugang ist in beiden Fällen kostenlos in der Testphase.
-          </p>
+    <section class="hero">
+      <div class="welcome">
+        <h2>Herzlich Willkommen</h2>
+        <h3>bei SmartPages</h3>
+        <p>
+          Mit SmartPages startest du in nur wenigen Minuten dein eigenes digitales Zuhause.
+          Wir senden dir deinen persönlichen <b>Magic-Link</b>, mit dem du direkt in dein Dashboard gelangst – 
+          ohne Passwort oder komplizierte Registrierung.
+        </p>
+        <p>
+          Gib einfach deine Basisdaten ein, damit dein Account korrekt zugeordnet werden kann.
+          Du entscheidest, ob du SmartPages privat oder geschäftlich nutzt – der Zugang ist in beiden Fällen kostenlos in der Testphase.
+        </p>
+      </div>
+
+      <form onsubmit="handleSubmit(event)">
+        <label>Vorname *</label>
+        <input type="text" name="first_name" required />
+
+        <label>Nachname</label>
+        <input type="text" name="last_name" />
+
+        <label>E-Mail *</label>
+        <input type="email" name="email" required />
+
+        <div class="checkbox">
+          <input type="checkbox" id="is_business" name="is_business" onchange="toggleCompany()" />
+          <label for="is_business">Das ist ein Firmenkonto (Business)</label>
         </div>
 
-        <div class="login-box">
-          <form id="magicForm">
-            <label for="first_name">Vorname *</label>
-            <input type="text" id="first_name" name="first_name" required />
-
-            <label for="last_name">Nachname</label>
-            <input type="text" id="last_name" name="last_name" />
-
-            <label for="email">E-Mail *</label>
-            <input type="email" id="email" name="email" required />
-
-            <div class="checkbox">
-              <input type="checkbox" id="is_business" name="is_business" />
-              <label for="is_business">Das ist ein Firmenkonto (Business)</label>
-            </div>
-
-            <div id="company_field" style="display:none;">
-              <label for="company_name">Firmenname</label>
-              <input type="text" id="company_name" name="company_name" />
-            </div>
-
-            <button type="submit">Magic-Link senden</button>
-          </form>
-        </div>
-      </section>
-
-      <section class="products">
-        <div class="product p-profile">
-          <h3>SmartProfile</h3>
-          <p>Erstelle in Minuten deine zentrale Profilseite mit Branding, Links & Kontakt – ideal für Creator, Influencer und Solopreneure.</p>
+        <div id="company_field" style="display:none;">
+          <label>Firmenname</label>
+          <input type="text" name="company_name" />
         </div>
 
-        <div class="product p-page">
-          <h3>SmartPage</h3>
-          <p>Deine persönliche Subdomain mit bis zu 5 frei gestaltbaren Unterseiten. Präsentiere Produkte, Dienstleistungen oder Projekte – individuell & professionell.</p>
-        </div>
+        <button type="submit">Magic-Link senden</button>
+      </form>
+    </section>
 
-        <div class="product p-domain">
-          <h3>SmartDomain</h3>
-          <p>Gestalte deine eigene Homepage mit deinem Namen und entwickle sie ganz individuell mit unseren Bausteinen.</p>
-        </div>
-      </section>
-    </main>
+    <section class="products">
+      <div class="card smartprofile">
+        <h3>SmartProfile</h3>
+        <p>Erstelle in Minuten deine zentrale Profilseite mit Branding, Links & Kontakt – ideal für Creator, Influencer und Solopreneure.</p>
+      </div>
+
+      <div class="card smartpage">
+        <h3>SmartPage</h3>
+        <p>Deine persönliche Subdomain mit bis zu 5 frei gestaltbaren Unterseiten. Präsentiere Produkte, Dienstleistungen oder Projekte – individuell & professionell.</p>
+      </div>
+
+      <div class="card smartdomain">
+        <h3>SmartDomain</h3>
+        <p>Gestalte deine eigene Homepage mit deinem Namen und entwickle sie ganz individuell mit unseren Bausteinen.</p>
+      </div>
+    </section>
 
     <footer>
       © 2025 SmartPages · Profi Marketing LLC · DSGVO-konform in Europa gehostet
     </footer>
 
     <script>
-      const businessCheckbox = document.getElementById('is_business');
-      const companyField = document.getElementById('company_field');
-      const form = document.getElementById('magicForm');
-
-      businessCheckbox.addEventListener('change', () => {
-        companyField.style.display = businessCheckbox.checked ? 'block' : 'none';
-      });
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const data = {
-          first_name: form.first_name.value,
-          last_name: form.last_name.value,
-          email: form.email.value,
-          company_name: form.company_name.value,
-          is_business: businessCheckbox.checked
-        };
-
-        try {
-          const res = await fetch('https://smartcore.profi-marketing-llc.workers.dev/api/auth/start', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-          });
-
-          const result = await res.json();
-          if (result.ok) {
-            alert('✅ Magic-Link wurde gesendet! Bitte prüfe dein E-Mail-Postfach.');
-            form.reset();
-            companyField.style.display = 'none';
-          } else {
-            alert('❌ Fehler: ' + (result.message || result.error || 'Unbekannter Fehler'));
-          }
-        } catch (err) {
-          alert('❌ Serverfehler: ' + err.message);
-        }
-      });
+      function toggleCompany() {
+        const cb = document.getElementById("is_business");
+        const field = document.getElementById("company_field");
+        field.style.display = cb.checked ? "block" : "none";
+      }
     </script>
   </body>
 </html>
