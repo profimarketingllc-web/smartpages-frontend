@@ -222,53 +222,32 @@
         }
       }
 
-      /* === TOAST STYLES === */
-      .toast {
+      /* === POPUP STYLES === */
+      #popup {
         position: fixed;
-        bottom: 30px;
+        top: 50%;
         left: 50%;
-        transform: translateX(-50%) translateY(30px);
-        background: #fff;
-        color: #333;
-        padding: 14px 22px;
-        border-radius: 8px;
+        transform: translate(-50%, -40%);
+        background: white;
+        padding: 1.2rem 2rem;
+        border-radius: 10px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-        opacity: 0;
-        transition: all 0.35s ease;
-        z-index: 9999;
-        font-size: 15px;
         text-align: center;
-        max-width: 90%;
+        font-size: 1.1rem;
+        font-weight: 600;
+        opacity: 0;
+        transition: all 0.4s ease-in-out;
+        z-index: 9999;
       }
 
-      .toast.visible {
+      #popup.show {
         opacity: 1;
-        transform: translateX(-50%) translateY(0);
+        transform: translate(-50%, -50%);
       }
 
-      .toast.success {
-        border-left: 6px solid var(--yellow);
-        background: #fffbea;
-        color: #4d4b00;
-      }
-
-      .toast.warning {
-        border-left: 6px solid var(--orange);
-        background: #fff7f0;
-        color: #7a3b00;
-      }
-
-      .toast.error {
-        border-left: 6px solid #ef4444;
-        background: #fef2f2;
-        color: #991b1b;
-      }
-
-      .toast.loading {
-        border-left: 6px solid var(--blue);
-        background: #eff6ff;
-        color: #1e3a8a;
-      }
+      #popup.success { border-left: 8px solid #22c55e; background: #ecfdf5; color: #14532d; }
+      #popup.warning { border-left: 8px solid #facc15; background: #fefce8; color: #713f12; }
+      #popup.error   { border-left: 8px solid #ef4444; background: #fef2f2; color: #991b1b; }
     </style>
   </head>
 
@@ -287,7 +266,7 @@
         <h3>bei SmartPages</h3>
         <p>
           Mit SmartPages startest Du in nur wenigen Minuten Dein eigenes digitales Zuhause.
-          Wir senden Dir Deinen persönlichen <b>Magic-Link</b>, mit dem Du direkt in Dein Dashboard gelangst – 
+          Wir senden Dir Deinen persönlichen <b>Magic-Link</b>, mit dem Du direkt in Dein Dashboard gelangst –
           ohne Passwort oder komplizierte Registrierung.
         </p>
         <p>
@@ -349,6 +328,8 @@
       © 2025 SmartPages · Profi Marketing LLC · DSGVO-konform in Europa gehostet
     </footer>
 
+    <div id="popup"></div>
+
     <script>
       const API_URL = "https://api.smartpages.online/api/auth/start";
 
@@ -363,7 +344,7 @@
           is_business: form.is_business.checked,
         };
 
-        showToast("Sende Anfrage...", "loading");
+        showPopup("⏳ Wir senden Deinen Magic-Link...", "warning");
 
         try {
           const res = await fetch(API_URL, {
@@ -374,28 +355,27 @@
           const result = await res.json();
 
           if (result.ok) {
-            showToast("✅ Dein Magic-Link wurde gesendet! Bitte prüfe Dein Postfach.", "success");
+            showPopup("✅ Magic-Link gesendet! Bitte prüfe Dein E-Mail-Postfach.", "success");
             form.reset();
           } else if (result.error === "mailer_failed") {
-            showToast("⚠️ Der Versand ist fehlgeschlagen. Bitte versuche es in wenigen Minuten erneut.", "warning");
+            showPopup("⚠️ Der Versand ist momentan nicht möglich. Bitte später erneut versuchen.", "warning");
           } else if (result.error === "email_required" || result.error === "invalid_email") {
-            showToast("❌ Diese E-Mail-Adresse ist ungültig oder aktuell nicht erreichbar.", "error");
+            showPopup("❌ Die E-Mail-Adresse ist ungültig oder nicht erreichbar.", "error");
           } else {
-            showToast("❌ Der Versand konnte nicht abgeschlossen werden. Bitte überprüfe Deine Angaben.", "error");
+            showPopup("❌ Fehler beim Versand. Bitte überprüfe Deine Angaben.", "error");
           }
         } catch (err) {
-          showToast("⚠️ Netzwerkfehler – bitte prüfe Deine Internetverbindung.", "error");
+          showPopup("⚠️ Netzwerkfehler – bitte versuche es erneut.", "error");
         }
       }
 
-      function showToast(message, type = "info") {
-        const toast = document.createElement("div");
-        toast.className = `toast ${type}`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-        setTimeout(() => toast.classList.add("visible"), 100);
-        setTimeout(() => toast.classList.remove("visible"), 9000);
-        setTimeout(() => toast.remove(), 10000);
+      function showPopup(message, type = "success") {
+        const popup = document.getElementById("popup");
+        popup.textContent = message;
+        popup.className = `show ${type}`;
+        setTimeout(() => {
+          popup.classList.remove("show");
+        }, 10000);
       }
 
       document.addEventListener("DOMContentLoaded", () => {
