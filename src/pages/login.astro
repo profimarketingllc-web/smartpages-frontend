@@ -25,16 +25,6 @@
         color: #222;
       }
 
-      input,
-      button,
-      label,
-      p,
-      h1,
-      h2,
-      h3 {
-        font-family: inherit;
-      }
-
       header {
         background: var(--navy);
         color: white;
@@ -49,6 +39,18 @@
       header img {
         width: 120px;
         height: 120px;
+      }
+
+      .header-text h1 {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 0 0 0.4rem;
+      }
+
+      .header-text p {
+        margin: 0;
+        font-size: 1rem;
+        opacity: 0.9;
       }
 
       .hero {
@@ -70,6 +72,27 @@
         box-shadow: var(--shadow);
       }
 
+      .welcome {
+        background: #fff;
+        box-shadow: var(--shadow);
+        padding: 2rem;
+        border-radius: 1rem;
+      }
+
+      .welcome h2 {
+        color: var(--yellow);
+        margin: 0 0 0.6rem;
+        font-size: 2.2rem;
+        font-weight: 800;
+      }
+
+      .welcome h3 {
+        margin: 0 0 1.25rem;
+        color: var(--navy);
+        font-size: 1.35rem;
+        font-weight: 700;
+      }
+
       form {
         background: #fff;
         padding: 1.5rem;
@@ -79,12 +102,30 @@
         gap: 1rem;
       }
 
+      .form-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+
+      label {
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #6b7280;
+      }
+
       input[type="text"],
       input[type="email"] {
         padding: 0.8rem;
         border: 1px solid #ccc;
         border-radius: 0.5rem;
         font-size: 1rem;
+      }
+
+      .checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
       }
 
       button {
@@ -104,6 +145,54 @@
         box-shadow: var(--shadow);
       }
 
+      .products {
+        max-width: 1200px;
+        margin: 4rem auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 0 2rem;
+      }
+
+      .card {
+        border-radius: 1rem;
+        color: white;
+        padding: 2rem;
+        box-shadow: var(--shadow);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .card h3 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0 0 0.75rem;
+      }
+
+      .card:hover {
+        transform: translateY(-12px) scale(1.02);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      }
+
+      .smartprofile {
+        background: linear-gradient(135deg, var(--blue), var(--blue-light));
+      }
+
+      .smartpage {
+        background: linear-gradient(135deg, var(--yellow), var(--orange));
+      }
+
+      .smartdomain {
+        background: linear-gradient(135deg, var(--violet), var(--violet-light));
+      }
+
+      footer {
+        text-align: center;
+        padding: 2rem;
+        background: #f5f5f5;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
       /* === POPUP === */
       #popup {
         position: fixed;
@@ -112,19 +201,21 @@
         transform: translate(-50%, -40%);
         background: white;
         padding: 1.2rem 2rem;
-        border-radius: 12px;
+        border-radius: 10px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
         text-align: center;
         font-size: 1.1rem;
         font-weight: 600;
         opacity: 0;
-        transition: all 0.5s ease-in-out;
+        transition: all 0.4s ease-in-out;
         z-index: 9999;
       }
+
       #popup.show {
         opacity: 1;
         transform: translate(-50%, -50%);
       }
+
       #popup.success { border-left: 8px solid #22c55e; background: #ecfdf5; color: #14532d; }
       #popup.warning { border-left: 8px solid #facc15; background: #fefce8; color: #713f12; }
       #popup.error   { border-left: 8px solid #ef4444; background: #fef2f2; color: #991b1b; }
@@ -141,6 +232,20 @@
     </header>
 
     <section class="hero">
+      <div class="welcome">
+        <h2>Herzlich Willkommen</h2>
+        <h3>bei SmartPages</h3>
+        <p>
+          Mit SmartPages startest Du in nur wenigen Minuten Dein eigenes digitales Zuhause.
+          Wir senden Dir Deinen persönlichen <b>Magic-Link</b>, mit dem Du direkt in Dein Dashboard gelangst – 
+          ohne Passwort oder komplizierte Registrierung.
+        </p>
+        <p>
+          Gib einfach Deine Basisdaten ein, damit Dein Account korrekt zugeordnet werden kann.
+          Du entscheidest, ob Du SmartPages privat oder geschäftlich nutzt – der Zugang ist in beiden Fällen <b>kostenlos</b>, in der Testphase.
+        </p>
+      </div>
+
       <div class="form-wrapper">
         <form id="magicForm">
           <div class="form-field">
@@ -173,19 +278,33 @@
       </div>
     </section>
 
+    <section class="products">
+      <div class="card smartprofile">
+        <h3>SmartProfile</h3>
+        <p>Erstelle in Minuten Deine zentrale Profilseite mit Branding, Links & Kontakt – ideal für Creator, Influencer und Solopreneure.</p>
+      </div>
+
+      <div class="card smartpage">
+        <h3>SmartPage</h3>
+        <p>Deine persönliche Subdomain mit bis zu 5 frei gestaltbaren Unterseiten. Präsentiere Deine Produkte, Dienstleistungen oder Projekte – individuell & professionell.</p>
+      </div>
+
+      <div class="card smartdomain">
+        <h3>SmartDomain</h3>
+        <p>Gestalte Deine eigene Homepage mit Deinem Namen und gestalte sie ganz individuell mit unseren Bausteinen.</p>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 SmartPages · Profi Marketing LLC · DSGVO-konform in Europa gehostet
+    </footer>
+
     <div id="popup"></div>
 
     <script>
       const API_URL = "https://api.smartpages.online/api/auth/start";
 
-      function showPopup(message, type = "success") {
-        const popup = document.getElementById("popup");
-        popup.textContent = message;
-        popup.className = `show ${type}`;
-        setTimeout(() => popup.classList.remove("show"), 9500);
-      }
-
-      async function handleSubmit(e) {
+      document.getElementById("magicForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         const form = e.target;
         const data = {
@@ -203,6 +322,7 @@
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data),
+            mode: "cors"
           });
 
           const result = await res.json();
@@ -212,31 +332,30 @@
             form.reset();
           } else if (result.error === "mailer_failed") {
             showPopup("⚠️ Der Versand ist momentan nicht möglich. Bitte später erneut versuchen.", "warning");
-          } else if (["email_required", "invalid_email"].includes(result.error)) {
+          } else if (result.error === "email_required" || result.error === "invalid_email") {
             showPopup("❌ Die E-Mail-Adresse ist ungültig oder nicht erreichbar.", "error");
           } else {
             showPopup("❌ Fehler beim Versand. Bitte überprüfe Deine Angaben.", "error");
           }
-        } catch (err) {
+        } catch {
           showPopup("⚠️ Netzwerkfehler – bitte versuche es erneut.", "error");
         }
+      });
+
+      function showPopup(message, type = "success") {
+        const popup = document.getElementById("popup");
+        popup.textContent = message;
+        popup.className = `show ${type}`;
+        setTimeout(() => popup.classList.remove("show"), 10000);
       }
 
-      window.addEventListener("DOMContentLoaded", () => {
-        console.log("✅ Script geladen und aktiv");
-        const form = document.getElementById("magicForm");
-        form.addEventListener("submit", handleSubmit);
-
+      document.addEventListener("DOMContentLoaded", () => {
         const cb = document.getElementById("is_business");
         const field = document.getElementById("company_field");
         cb.addEventListener("change", () => {
           field.style.display = cb.checked ? "block" : "none";
         });
       });
-
-      window.onerror = (msg) => {
-        showPopup("⚠️ Scriptfehler: " + msg, "error");
-      };
     </script>
   </body>
 </html>
