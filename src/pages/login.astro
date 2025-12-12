@@ -67,6 +67,13 @@ import "../styles/global.css";
         padding: 0 2rem;
       }
 
+      /* 🔹 Responsive Fix */
+      @media (max-width: 768px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+      }
+
       .form-wrapper {
         max-width: 540px;
         margin: 0 auto;
@@ -177,17 +184,9 @@ import "../styles/global.css";
         box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
       }
 
-      .smartprofile {
-        background: linear-gradient(135deg, var(--blue), var(--blue-light));
-      }
-
-      .smartpage {
-        background: linear-gradient(135deg, var(--yellow), var(--orange));
-      }
-
-      .smartdomain {
-        background: linear-gradient(135deg, var(--violet), var(--violet-light));
-      }
+      .smartprofile { background: linear-gradient(135deg, var(--blue), var(--blue-light)); }
+      .smartpage { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
+      .smartdomain { background: linear-gradient(135deg, var(--violet), var(--violet-light)); }
 
       footer {
         text-align: center;
@@ -241,12 +240,12 @@ import "../styles/global.css";
         <h3>bei SmartPages</h3>
         <p>
           Mit SmartPages startest Du in nur wenigen Minuten Dein eigenes digitales Zuhause.
-          Wir senden Dir Deinen persönlichen <b>Magic-Link</b>, mit dem Du direkt in Dein Dashboard gelangst – 
+          Wir senden Dir Deinen persönlichen <b>Magic-Link</b>, mit dem Du direkt in Dein Dashboard gelangst –
           ohne Passwort oder komplizierte Registrierung.
         </p>
         <p>
           Gib einfach Deine Basisdaten ein, damit Dein Account korrekt zugeordnet werden kann.
-          Du entscheidest, ob Du SmartPages privat oder geschäftlich nutzt – der Zugang ist in beiden Fällen <b>kostenlos</b>, in der Testphase.
+          Du entscheidest, ob Du SmartPages privat oder geschäftlich nutzt – der Zugang ist in beiden Fällen <b>kostenlos</b>.
         </p>
       </div>
 
@@ -290,12 +289,12 @@ import "../styles/global.css";
 
       <div class="card smartpage">
         <h3>SmartPage</h3>
-        <p>Deine persönliche Subdomain mit bis zu 5 frei gestaltbaren Unterseiten. Präsentiere Deine Produkte, Dienstleistungen oder Projekte – individuell & professionell.</p>
+        <p>Deine persönliche Subdomain mit bis zu 5 frei gestaltbaren Unterseiten. Präsentiere Deine Produkte, Dienstleistungen oder Projekte.</p>
       </div>
 
       <div class="card smartdomain">
         <h3>SmartDomain</h3>
-        <p>Gestalte Deine eigene Homepage mit Deinem Namen und gestalte sie ganz individuell mit unseren Bausteinen.</p>
+        <p>Gestalte Deine eigene Homepage mit Deinem Namen und passe sie individuell mit unseren Bausteinen an.</p>
       </div>
     </section>
 
@@ -319,7 +318,7 @@ import "../styles/global.css";
           is_business: form.is_business.checked,
         };
 
-        showPopup("⏳ Wir senden Deinen Magic-Link...", "warning");
+        showPopup("⏳ Wir senden Dir jetzt Deinen Magic-Link, einen Moment Geduld...", "warning");
 
         try {
           const res = await fetch(API_URL, {
@@ -334,10 +333,10 @@ import "../styles/global.css";
           if (result.ok) {
             showPopup("✅ Magic-Link gesendet! Bitte prüfe Dein E-Mail-Postfach.", "success");
             form.reset();
-          } else if (result.error === "mailer_failed") {
-            showPopup("⚠️ Der Versand ist momentan nicht möglich. Bitte später erneut versuchen.", "warning");
-          } else if (result.error === "email_required" || result.error === "invalid_email") {
-            showPopup("❌ Die E-Mail-Adresse ist ungültig oder nicht erreichbar.", "error");
+          } else if (result.error === "rate_limited") {
+            showPopup("⚠️ Bitte warte kurz, bevor Du es erneut versuchst.", "warning");
+          } else if (result.error === "email_bounced") {
+            showPopup("❌ Diese E-Mail konnte zuvor nicht erreicht werden.", "error");
           } else {
             showPopup("❌ Fehler beim Versand. Bitte überprüfe Deine Angaben.", "error");
           }
