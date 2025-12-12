@@ -1,5 +1,5 @@
 ---
-import "/src/styles/global.css";
+import "~/styles/global.css";
 ---
 
 <!DOCTYPE html>
@@ -67,7 +67,6 @@ import "/src/styles/global.css";
         padding: 0 2rem;
       }
 
-      /* 🔹 Responsive Fix */
       @media (max-width: 768px) {
         .hero {
           grid-template-columns: 1fr;
@@ -196,58 +195,6 @@ import "/src/styles/global.css";
         color: #555;
       }
 
-      /* =========================================================
-         📱 MOBILE OPTIMIERUNG (ohne Designänderung)
-         ========================================================= */
-      @media (max-width: 768px) {
-        body {
-          padding-bottom: 2rem;
-        }
-      
-        header {
-          flex-direction: column;
-          gap: 1rem;
-          text-align: center;
-        }
-      
-        .hero {
-          grid-template-columns: 1fr;
-          text-align: center;
-          padding: 1rem;
-        }
-      
-        .welcome,
-        .form-wrapper {
-          max-width: 95%;
-          margin: 0 auto;
-          padding: 1.8rem 1.4rem;
-        }
-      
-        form {
-          align-items: stretch;
-        }
-      
-        input[type="text"],
-        input[type="email"] {
-          width: 100%;
-          font-size: 1rem;
-        }
-      
-        button {
-          width: 100%;
-          margin-top: 0.5rem;
-        }
-      
-        .products {
-          grid-template-columns: 1fr;
-          text-align: center;
-        }
-      
-        .card {
-          padding: 1.5rem 1.2rem;
-        }
-      }
-
       /* === POPUP === */
       #popup {
         position: fixed;
@@ -297,7 +244,8 @@ import "/src/styles/global.css";
         </p>
         <p>
           Gib einfach Deine Basisdaten ein, damit Dein Account korrekt zugeordnet werden kann.
-          Du entscheidest, ob Du SmartPages privat oder geschäftlich nutzt – der Zugang wöhrend der Testphase ist in beiden Fällen <b>kostenlos</b>.
+          Du entscheidest, ob Du SmartPages privat oder geschäftlich nutzt – 
+          der Zugang ist während der Testphase in beiden Fällen <b>kostenlos!</b>
         </p>
       </div>
 
@@ -333,23 +281,6 @@ import "/src/styles/global.css";
       </div>
     </section>
 
-    <section class="products">
-      <div class="card smartprofile">
-        <h3>SmartProfile</h3>
-        <p>Erstelle in Minuten Deine zentrale Profilseite mit Branding, Links & Kontakt – ideal für Creator, Influencer und Solopreneure.</p>
-      </div>
-
-      <div class="card smartpage">
-        <h3>SmartPage</h3>
-        <p>Deine persönliche Subdomain mit bis zu 5 frei gestaltbaren Unterseiten. Präsentiere Deine Produkte, Dienstleistungen oder Projekte.</p>
-      </div>
-
-      <div class="card smartdomain">
-        <h3>SmartDomain</h3>
-        <p>Gestalte Deine eigene Homepage mit Deinem Namen und passe sie individuell mit unseren Bausteinen an.</p>
-      </div>
-    </section>
-
     <footer>
       © 2025 SmartPages · Profi Marketing LLC · DSGVO-konform in Europa gehostet
     </footer>
@@ -371,7 +302,7 @@ import "/src/styles/global.css";
         };
 
         showPopup(
-          "⏳ Einen kleinen Moment bitte...<br>Wir senden Dir gerade Deinen Magic-Link an Deine E-Mail-Adresse.",
+          "⏳ Wir senden Dir jetzt Deinen Magic-Link.<br>Bitte hab einen Moment Geduld…",
           "warning"
         );
 
@@ -386,14 +317,14 @@ import "/src/styles/global.css";
           const result = await res.json();
 
           if (result.ok) {
-            showPopup("✅ Magic-Link gesendet! Bitte prüfe Dein E-Mail-Postfach.", "success");
+            showPopup("✅ Magic-Link gesendet!<br>Bitte prüfe Dein E-Mail-Postfach.", "success");
             form.reset();
           } else if (result.error === "rate_limited") {
             showPopup("⚠️ Bitte warte kurz, bevor Du es erneut versuchst.", "warning");
           } else if (result.error === "email_bounced") {
             showPopup("❌ Diese E-Mail konnte zuvor nicht erreicht werden.", "error");
           } else {
-            showPopup("❌ Fehler beim Versand. Bitte überprüfe Deine Angaben.", "error");
+            showPopup("❌ Fehler beim Versand.<br>Bitte überprüfe Deine Angaben.", "error");
           }
         } catch {
           showPopup("⚠️ Netzwerkfehler – bitte versuche es erneut.", "error");
@@ -402,9 +333,9 @@ import "/src/styles/global.css";
 
       function showPopup(message, type = "success") {
         const popup = document.getElementById("popup");
-        popup.textContent = message;
+        popup.innerHTML = message;
         popup.className = `show ${type}`;
-        setTimeout(() => popup.classList.remove("show"), 10000);
+        setTimeout(() => popup.classList.remove("show"), 8000);
       }
 
       document.addEventListener("DOMContentLoaded", () => {
