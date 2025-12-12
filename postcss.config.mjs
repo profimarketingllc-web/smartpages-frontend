@@ -1,8 +1,8 @@
-// ✅ Korrekte PostCSS-Konfiguration für Tailwind v4
-const tailwindcss = require('tailwindcss');
-const autoprefixer = require('autoprefixer');
+// ✅ PostCSS setup for Tailwind v4
+import tailwindcss from "tailwindcss";
+import autoprefixer from "autoprefixer";
 
-module.exports = {
+export default {
   plugins: [
     tailwindcss(),
     autoprefixer()

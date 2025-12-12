@@ -1,4 +1,3 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
 import path from 'path';
 import tailwind from '@tailwindcss/vite';
@@ -12,7 +11,7 @@ export default defineConfig({
       },
     },
     css: {
-      postcss: './postcss.config.cjs',
+      postcss: './postcss.config.mjs', // ✅ verweist auf die richtige Datei
     },
     plugins: [tailwind()],
   },
