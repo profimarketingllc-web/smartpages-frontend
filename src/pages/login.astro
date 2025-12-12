@@ -370,7 +370,10 @@ import "../styles/global.css";
           is_business: form.is_business.checked,
         };
 
-        showPopup("⏳ Wir senden Dir jetzt Deinen Magic-Link, einen Moment Geduld...", "warning");
+        showPopup(
+          "⏳ Einen kleinen Moment bitte...<br>Wir senden Dir gerade Deinen Magic-Link an Deine E-Mail-Adresse.",
+          "warning"
+        );
 
         try {
           const res = await fetch(API_URL, {
