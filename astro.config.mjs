@@ -10,5 +10,8 @@ export default defineConfig({
         '~': path.resolve('./src'),
       },
     },
+    css: {
+      postcss: './postcss.config.cjs',
+    },
   },
 });
